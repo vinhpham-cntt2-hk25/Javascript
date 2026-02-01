@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>btvn4.html</title>
+</head>
+<body>
+    <script>
+let tongSach = 0;
+let sachMat = 0;
+let sachHetHang = 0;
+let sachTonNhieu = 0;
+let sachTonBinhThuong = 0;
+
+console.log("--- CHƯƠNG TRÌNH KIỂM KÊ KHO SÁCH ---");
+
+while (true) {
+    let tiepTuc = prompt("Tiếp tục kiểm kê sách tiếp theo? (có/không)").toLowerCase();
+
+    if (tiepTuc === "không" || tiepTuc === "khong") {
+        break; 
+    } else if (tiepTuc === "có" || tiepTuc === "co") {
+        
+        let maSach = "";
+        while (maSach.trim() === "") {
+            maSach = prompt("Nhập Mã sách (không được để trống):");
+        }
+        
+        let tenSach = prompt("Nhập Tên sách:");
+        let soLuong = parseInt(prompt("Số lượng thực tế đang có trong kho:"));
+        let tinhTrang = parseInt(prompt("Tình trạng sách (1-Bình thường, 2-Mất):"));
+
+        // Kiểm tra tính hợp lệ của số lượng và tình trạng
+        if (isNaN(soLuong) || soLuong < 0 || (tinhTrang !== 1 && tinhTrang !== 2)) {
+            alert("Dữ liệu nhập không hợp lệ (Số lượng >= 0 và Tình trạng là 1 hoặc 2). Vui lòng nhập lại cuốn này.");
+            continue;
+        }
+
+        let ketQuaPhanLoai = "";
+
+        if (tinhTrang === 2) {
+            ketQuaPhanLoai = "Sách mất";
+            sachMat++;
+        } else if (tinhTrang === 1 && soLuong === 0) {
+            ketQuaPhanLoai = "Sách hết (vẫn còn trong hệ thống)";
+            sachHetHang++;
+        } else if (tinhTrang === 1 && soLuong >= 10) {
+            ketQuaPhanLoai = "Sách tồn kho nhiều";
+            sachTonNhieu++;
+        } else if (tinhTrang === 1 && soLuong >= 1 && soLuong <= 9) {
+            ketQuaPhanLoai = "Sách tồn kho bình thường";
+            sachTonBinhThuong++;
+        }
+
+        tongSach++;
+        console.log(`[${maSach}] ${tenSach} -> ${ketQuaPhanLoai}`);
+
+    } else {
+        alert("Vui lòng chỉ nhập 'có' hoặc 'không'.");
+    }
+}
+
+console.log("================================");
+console.log("BÁO CÁO KIỂM KÊ CUỐI PHIÊN");
+console.log(`- Tổng số sách đã kiểm kê: ${tongSach} cuốn`);
+console.log(`- Số sách mất: ${sachMat} cuốn`);
+console.log(`- Số sách hết hàng: ${sachHetHang} cuốn`);
+console.log(`- Số sách tồn kho nhiều: ${sachTonNhieu} cuốn`);
+console.log(`- Số sách tồn kho bình thường: ${sachTonBinhThuong} cuốn`);
+console.log("================================");
+    </script>
+</body>
+</html>

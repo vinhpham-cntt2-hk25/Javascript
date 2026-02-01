@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>btvn1.html</title>
+</head>
+    <p>
+       Nhấn F5 để chạy lại từ đầu nếu bị khoá. 
+    </p>
+<body>
+    <script>
+let soLuotMuon = parseInt(prompt("Hôm nay có bao nhiêu lượt mượn sách?"));
+
+let danhSachMuon = [];
+let tongSoLuot = 0;
+
+if (isNaN(soLuotMuon) || soLuotMuon <= 0) {
+    console.log("Số lượt mượn không hợp lệ. Vui lòng chạy lại chương trình.");
+} else {
+    for (let i = 1; i <= soLuotMuon; i++) {
+        console.log(`--- Lượt mượn thứ ${i} ---`);
+        
+        let tenNguoiMuon = prompt(`Nhập tên người mượn thứ ${i}:`);
+        let tenSach = prompt(`Nhập tên sách:`);
+        let soNgayMuon = parseInt(prompt(`Nhập số ngày mượn (1-30):`));
+
+        let trangThai = "";
+        if (soNgayMuon > 14) {
+            trangThai = "Cảnh báo: Thời gian mượn vượt quy định (tối đa 14 ngày)";
+        } else if (soNgayMuon >= 1 && soNgayMuon <= 14) {
+            trangThai = "Mượn thành công";
+        } else {
+            trangThai = "Lỗi: Số ngày mượn không hợp lệ";
+        }
+
+        console.log(`Người mượn: ${tenNguoiMuon}`);
+        console.log(`Sách: ${tenSach}`);
+        console.log(`Kết quả: ${trangThai}`);
+
+        danhSachMuon.push({
+            ten: tenNguoiMuon,
+            sach: tenSach,
+            ngay: soNgayMuon,
+            ketQua: trangThai
+        });
+        
+        tongSoLuot++;
+    }
+
+    console.log("================================");
+    console.log("BÁO CÁO THỐNG KÊ CUỐI NGÀY");
+    console.log(`Tổng số lượt mượn ghi nhận: ${tongSoLuot}`);
+    console.log("================================");
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>btvn2.html</title>
+</head>
+<body>
+    <script>
+let soLuotTra = parseInt(prompt("Hôm nay có bao nhiêu lượt trả sách?"));
+
+let tongSoLuot = 0;
+let soLuotMuon = 0;
+
+if (isNaN(soLuotTra) || soLuotTra <= 0) {
+    console.log("Dữ liệu không hợp lệ. Vui lòng tải lại trang và nhập số nguyên dương.");
+} else {
+    for (let i = 1; i <= soLuotTra; i++) {
+        console.log(`--- Lượt trả thứ ${i} ---`);
+        let tenNguoiTra = prompt(`Tên người trả thứ ${i}:`);
+        let tenSach = prompt(`Tên sách trả:`);
+        
+        let soNgayThucTe;
+        
+        do {
+            soNgayThucTe = parseInt(prompt(`Nhập số ngày đã mượn thực tế cho cuốn "${tenSach}" (phải >= 1):`));
+            if (isNaN(soNgayThucTe) || soNgayThucTe < 1) {
+                alert("Lỗi: Số ngày mượn phải là số nguyên lớn hơn hoặc bằng 1. Vui lòng nhập lại!");
+            }
+        } while (isNaN(soNgayThucTe) || soNgayThucTe < 1);
+
+        let tinhTrang = "";
+        let ghiChu = "";
+
+        if (soNgayThucTe <= 14) {
+            tinhTrang = "Trả đúng hạn";
+        } else if (soNgayThucTe <= 21) {
+            tinhTrang = "Trả muộn nhẹ";
+            ghiChu = "Phạt nhắc nhở";
+            soLuotMuon++; 
+        } else {
+            tinhTrang = "Quá hạn nghiêm trọng";
+            ghiChu = "Cần ghi biên bản phạt";
+            soLuotMuon++; 
+        }
+
+        console.log(`Người trả: ${tenNguoiTra}`);
+        console.log(`Tình trạng: ${tinhTrang}`);
+        if (ghiChu !== "") console.log(`Hành động: ${ghiChu}`);
+        
+        tongSoLuot++;
+    }
+
+    console.log("--------------------------------");
+    console.log("BÁO CÁO KIỂM TRA TRẢ SÁCH");
+    console.log(`- Tổng số lượt trả: ${tongSoLuot}`);
+    console.log(`- Số lượt trả muộn (≥ 15 ngày): ${soLuotMuon}`);
+    console.log("--------------------------------");
+}
+    </script>
+</body>
+</html>

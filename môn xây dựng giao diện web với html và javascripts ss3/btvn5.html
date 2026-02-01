@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>btvn5.html</title>
+</head>
+<body>
+    <script>
+        // Khởi tạo các biến thống kê ca làm việc
+let tongYeuCau = 0;
+let thanhCong = 0;
+let biTuChoi = 0;
+let choXetDuyet = 0;
+
+console.log("--- HỆ THỐNG QUẢN LÝ ĐẶT MƯỢN TRƯỚC (RESERVATION) ---");
+
+while (true) {
+    // 1. Hỏi thủ thư để tiếp tục hoặc dừng
+    let cauHoi = prompt("Có yêu cầu đặt mượn trước mới không? (có/không)");
+
+    // Chuẩn hóa dữ liệu nhập vào (viết thường, xóa khoảng trắng)
+    if (!cauHoi) break; 
+    cauHoi = cauHoi.toLowerCase().trim();
+
+    if (cauHoi === "không" || cauHoi === "khong") {
+        break; 
+    } else if (cauHoi === "có" || cauHoi === "co") {
+        
+        // 2. Nhập thông tin yêu cầu
+        let tenBanDoc = prompt("Tên bạn đọc:");
+        let maSach = prompt("Mã sách muốn đặt trước:");
+        let tenSach = prompt("Tên sách (tham khảo):");
+        let ngayCho = parseInt(prompt("Số ngày dự kiến chờ (số nguyên >= 1):"));
+        let uuTien = parseInt(prompt("Mức ưu tiên (1: SV, 2: GV/NCS, 3: Nhân viên):"));
+
+        // Kiểm tra dữ liệu đầu vào cơ bản
+        if (isNaN(ngayCho) || ngayCho < 1 || isNaN(uuTien)) {
+            alert("Lỗi: Dữ liệu ngày chờ hoặc mức ưu tiên không hợp lệ. Vui lòng nhập lại!");
+            continue;
+        }
+
+        tongYeuCau++; // Ghi nhận yêu cầu mới
+
+        // 3. Quy tắc xử lý theo thứ tự ưu tiên (STT 1 -> 5)
+        console.log(`\nĐang xử lý: [${maSach}] ${tenSach} - Người yêu cầu: ${tenBanDoc}`);
+
+        if (ngayCho > 45) {
+            // STT 1: Thời gian chờ quá lâu (Ưu tiên cao nhất)
+            console.log("Kết quả: Từ chối - Thời gian chờ quá lâu (>45 ngày)");
+            biTuChoi++;
+        } 
+        else if (uuTien === 3) {
+            // STT 2: Đặc cách
+            console.log("Kết quả: Đặt trước thành công - Ưu tiên đặc cách cao nhất");
+            thanhCong++;
+        } 
+        else if (uuTien === 2 && ngayCho <= 30) {
+            // STT 3: Giảng viên/NCS và chờ <= 30 ngày
+            console.log("Kết quả: Đặt trước thành công - Ưu tiên giảng viên/nghiên cứu");
+            thanhCong++;
+        } 
+        else if (uuTien === 1 && ngayCho <= 21) {
+            // STT 4: Sinh viên và chờ <= 21 ngày
+            console.log("Kết quả: Đặt trước thành công");
+            thanhCong++;
+        } 
+        else {
+            // STT 5: Các trường hợp còn lại
+            console.log("Kết quả: Đặt trước tạm thời - Chờ xét duyệt thêm");
+            choXetDuyet++;
+        }
+
+    } else {
+        alert("Vui lòng chỉ nhập 'có' hoặc 'không'.");
+    }
+}
+
+console.log("\n" + "=".repeat(30));
+console.log("BÁO CÁO TỔNG HỢP CA LÀM VIỆC");
+console.log(`- Tổng số yêu cầu đã xử lý: ${tongYeuCau}`);
+console.log(`- Số đặt trước thành công:   ${thanhCong}`);
+console.log(`- Số yêu cầu bị từ chối:    ${biTuChoi}`);
+console.log(`- Số yêu cầu chờ xét duyệt: ${choXetDuyet}`);
+console.log("=".repeat(30));
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kiểm tra dãy Fibonacci</title>
+</head>
+<body>
+    <script>
+       
+            let n = document.getElementById("n").value;
+            let div = document.getElementById("inputArray");
+            div.innerHTML = "";
+            for (let i = 0; i < n; i++) {
+                div.innerHTML += `Phần tử ${i+1}: <input type="number" id="a${i}"><br>`;
+            }
+        
+            if (arr.length < 3) return true;
+            for (let i = 2; i < arr.length; i++) {
+                if (arr[i] != arr[i-1] + arr[i-2]) {
+                    return false;
+                }
+            }
+            return true;
+        
+
+            let n = document.getElementById("n").value;
+            let arr = [];
+            for (let i = 0; i < n; i++) {
+                arr.push(parseInt(document.getElementById("a"+i).value));
+            }
+
+            let result = document.getElementById("result");
+            if (isFibonacci(arr)) {
+                result.textContent = " Mảng là dãy Fibonacci";
+            } else {
+                result.textContent = " Mảng KHÔNG phải dãy Fibonacci";
+            }
+    </script>
+</body>
+</html>

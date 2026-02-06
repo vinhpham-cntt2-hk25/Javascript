@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>btvn2.html</title>
+</head>
+<body>
+    <script>
+// ===== KHAI BÁO MẢNG =====
+let arr = [];
+
+// ===== NHẬP SỐ PHẦN TỬ =====
+let n = parseInt(prompt("Nhập số phần tử của mảng:"));
+
+for (let i = 0; i < n; i++) {
+    let num;
+    let isDuplicate;
+
+    do {
+        isDuplicate = false;
+        num = parseInt(prompt("Nhập số nguyên thứ " + (i + 1) + ":"));
+
+        for (let j = 0; j < arr.length; j++) {
+            if (arr[j] === num) {
+                isDuplicate = true;
+                alert("Số đã tồn tại, nhập lại!");
+                break;
+            }
+        }
+    } while (isDuplicate);
+
+    arr.push(num);
+}
+
+// ===== XỬ LÝ =====
+if (arr.length === 0) {
+    console.log("Không có số lớn nhất");
+} else {
+    let max = arr[0];
+    let position = 0;
+
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+            position = i;
+        }
+    }
+
+    console.log("Số lớn nhất:", max);
+    console.log("Vị trí:", position);
+}
+
+
+    </script>
+</body>
+</html>

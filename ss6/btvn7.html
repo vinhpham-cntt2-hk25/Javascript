@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>btvn7.html</title>
+</head>
+<body>
+    <script>
+       // Khai báo mảng có sẵn
+let arr = ["", false, 0, 5, 10, "Hello world!"];
+
+// Mảng lưu kết quả
+let result = [];
+
+// Duyệt mảng và loại bỏ falsy
+for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+        result.push(arr[i]);
+    }
+}
+
+// In kết quả
+console.log(result);
+    </script>
+</body>
+</html>

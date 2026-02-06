@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>btvn6.html</title>
+</head>
+<body>
+    <script>
+        
+    let uniqueArr = [...new Set(arr)];
+
+    if (uniqueArr.length < 2) {
+        console.log("Không tìm thấy số lớn thứ hai");
+        return;
+    }
+
+    let max1 = Math.max(...uniqueArr);
+    uniqueArr = uniqueArr.filter(x => x !== max1);
+    let max2 = Math.max(...uniqueArr);
+
+    console.log(max2);
+}
+
+findSecondLargest();
+let arr = ["", false, 0, 5, 10, "Hello world!"];
+
+let result = [];
+
+for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+        result.push(arr[i]);
+    }
+}
+
+console.log(result);
+    </script>
+</body>
+</html>

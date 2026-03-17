@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Công việc chuẩn bị Tết</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #fff5f5; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 32px 16px; }
+  #app { width: 100%; max-width: 460px; background: #fff; border-radius: 16px; box-shadow: 0 6px 30px rgba(200,50,50,.12); overflow: hidden; }
+  .hd { background: #c0392b; padding: 22px 20px 18px; text-align: center; color: #fff; }
+  .hd h2 { font-size: 20px; font-weight: 600; }
+  .hd p { font-size: 13px; opacity: .85; margin-top: 5px; }
+  .row { display: flex; gap: 8px; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  #inp { flex: 1; height: 38px; padding: 0 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
+  #inp:focus { border-color: #c0392b; }
+  #inp.err { border-color: #e74c3c; animation: shake .4s; }
+  @keyframes shake { 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+  button { height: 38px; padding: 0 18px; background: #c0392b; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  button:hover { background: #a93226; }
+  #list { padding: 10px 12px 14px; display: flex; flex-direction: column; gap: 7px; }
+  .item { display: flex; align-items: center; gap: 10px; padding: 10px 13px; border-radius: 9px; cursor: pointer; border: 1.5px solid; transition: filter .15s; }
+  .item:hover { filter: brightness(.97); }
+  .item.done { background: #e8f8f1; border-color: #a9dfbf; }
+  .item.todo { background: #fef9ee; border-color: #f0e0b0; }
+  .item.new { animation: slide .35s ease; }
+  @keyframes slide { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+  .cb { width: 21px; height: 21px; border-radius: 50%; border: 1.5px solid #ccc; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .item.done .cb { background: #27ae60; border-color: #27ae60; color: #fff; }
+  .item.done .txt { text-decoration: line-through; color: #999; }
+  .txt { font-size: 14px; color: #333; }
+  .ft { font-size: 11px; color: #bbb; text-align: center; padding: 8px 0 14px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hd">
+    <h2>Công việc chuẩn bị Tết</h2>
+    <p>Thêm công việc mới &amp; đánh dấu hoàn thành</p>
+  </div>
+  <div class="row">
+    <input id="inp" placeholder="Nhập công việc mới...">
+    <button onclick="add()">Thêm</button>
+  </div>
+  <div id="list"></div>
+  <p class="ft">Mọi thay đổi được lưu tự động vào localStorage • Refresh để kiểm tra</p>
+</div>
+
+<script>
+const KEY = 'tet_tasks';
+const defaults = [
+  { id: 1, text: 'Mua bánh chưng', done: true },
+  { id: 2, text: 'Dọn nhà đón Tết', done: true },
+  { id: 3, text: 'Gói bánh chưng', done: false },
+  { id: 4, text: 'Trang trí nhà nền bằng hoa mai, hoa đào', done: false },
+  { id: 5, text: 'Mua phong bao lì xì', done: false },
+  { id: 6, text: 'Chuẩn bị mâm ngũ quả', done: false },
+];
+
+let tasks = JSON.parse(localStorage.getItem(KEY) || 'null') || defaults;
+const inp = document.getElementById('inp');
+const list = document.getElementById('list');
+
+function save() { localStorage.setItem(KEY, JSON.stringify(tasks)); }
+
+function render() {
+  list.innerHTML = tasks.map(t => `
+    <div class="item ${t.done ? 'done' : 'todo'}" onclick="toggle(${t.id})">
+      <div class="cb">${t.done ? '✓' : ''}</div>
+      <span class="txt">${t.text}</span>
+    </div>`).join('');
+}
+
+function toggle(id) {
+  tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+  save(); render();
+}
+
+function add() {
+  const v = inp.value.trim();
+  if (!v) {
+    inp.classList.add('err');
+    setTimeout(() => inp.classList.remove('err'), 500);
+    return;
+  }
+  tasks = [{ id: Date.now(), text: v, done: false }, ...tasks];
+  save(); render();
+  list.firstChild.classList.add('new');
+  inp.value = '';
+  inp.focus();
+}
+
+inp.addEventListener('keydown', e => e.key === 'Enter' && add());
+render();
+</script>
+</body>
+</html>

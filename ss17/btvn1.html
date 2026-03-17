@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo Tết</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    .container {
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      background: red;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-weight: bold;
+    }
+
+    .todo {
+      padding: 10px;
+      margin: 10px;
+      background: #f1e5c9;
+      border-left: 4px solid orange;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">Chuẩn bị Tết Nguyên Đán</div>
+  <div id="todo-list"></div>
+</div>
+
+<script>
+  const defaultTodos = [
+    { id: 1, task: "Mua bánh chưng", done: false },
+    { id: 2, task: "Dọn nhà đón Tết", done: false },
+    { id: 3, task: "Gói bánh chưng", done: false },
+    { id: 4, task: "Trang trí nhà cửa", done: false }
+  ];
+
+  if (!localStorage.getItem("myTodos")) {
+    localStorage.setItem("myTodos", JSON.stringify(defaultTodos));
+    console.log("Đã lưu lần đầu vào localStorage");
+  }
+
+  const todos = JSON.parse(localStorage.getItem("myTodos"));
+
+  const todoList = document.getElementById("todo-list");
+
+  function renderTodos(data) {
+    todoList.innerHTML = "";
+
+    data.forEach(todo => {
+      const div = document.createElement("div");
+      div.className = "todo";
+      div.textContent = todo.task;
+      todoList.appendChild(div);
+    });
+  }
+
+  renderTodos(todos);
+</script>
+
+</body>
+</html>

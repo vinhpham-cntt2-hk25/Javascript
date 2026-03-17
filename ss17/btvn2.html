@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo Tết</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    .container {
+      width: 320px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      background: red;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-weight: bold;
+    }
+
+    .todo {
+      padding: 10px;
+      margin: 10px;
+      background: #f1e5c9;
+      border-left: 4px solid orange;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: gray;
+      background: #d4edda;
+      border-left: 4px solid green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">Chuẩn bị Tết Nguyên Đán</div>
+  <div id="todo-list"></div>
+</div>
+
+<script>
+  const initialTodos = [
+    { id: 1, task: "Mua bánh chưng", done: false },
+    { id: 2, task: "Dọn nhà đón Tết", done: false },
+    { id: 3, task: "Gói bánh chưng", done: false },
+    { id: 4, task: "Trang trí nhà cửa", done: false }
+  ];
+
+  // 👉 1. Lấy dữ liệu hoặc khởi tạo
+  let todos = JSON.parse(localStorage.getItem("myTodos"));
+
+  if (!todos) {
+    todos = initialTodos;
+    localStorage.setItem("myTodos", JSON.stringify(todos));
+  }
+
+  const todoList = document.getElementById("todo-list");
+
+  // 👉 2. Render
+  function renderTodos() {
+    todoList.innerHTML = "";
+
+    todos.forEach(todo => {
+      const div = document.createElement("div");
+      div.className = "todo";
+
+      if (todo.done) {
+        div.classList.add("done");
+      }
+
+      div.innerHTML = `
+        <span>${todo.task}</span>
+        <span>${todo.done ? "✓" : "Chưa làm"}</span>
+      `;
+
+      // 👉 3. Click toggle
+      div.addEventListener("click", () => {
+        todo.done = !todo.done;
+
+        // Lưu lại
+        localStorage.setItem("myTodos", JSON.stringify(todos));
+
+        // Render lại UI
+        renderTodos();
+      });
+
+      todoList.appendChild(div);
+    });
+  }
+
+  renderTodos();
+</script>
+
+</body>
+</html>

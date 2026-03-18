@@ -1,24 +1,107 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
-    <link rel="stylesheet" href="./index.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>📝 Todo List</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Người Dùng</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background-color: #f0f0f0; }
+        input { margin: 4px; padding: 6px; width: 200px; }
+        button { padding: 6px 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Quản Lý Người Dùng (<span id="counter">0</span> người)</h2>
 
-      <div class="input-row">
-        <input type="text" id="taskInput" placeholder="Nhập công việc..." />
-        <button>Thêm</button>
-      </div>
-
-      <ul id="taskList">
-        <li>Quét nhà</li>
-        <li>Giặt quần áo</li>
-      </ul>
+    <div>
+        <input id="input-name"    type="text"  placeholder="Họ tên" />
+        <input id="input-email"   type="email" placeholder="Email" />
+        <input id="input-contact" type="text"  placeholder="Số điện thoại" />
+        <button onclick="addProduct()">Thêm</button>
     </div>
-  </body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Liên hệ</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+    </table>
+
+    <script>
+        let products = [
+            { id: 1, name: 'Monkey D. Luffy',  email: 'monkeyDluffy@gmail.com', contact: '19001001' },
+            { id: 2, name: 'Nguyễn Lan Quỳnh', email: 'lnqynh07@gmail.com',     contact: '11001905' },
+            { id: 3, name: 'Trương Ngọc Minh', email: 'trngocv7@gmail.com',     contact: '18001514' },
+            { id: 4, name: 'Phạm Ngọc Vinh',   email: 'dragonzoro17@gmail.com', contact: '11002304' },
+            { id: 5, name: 'Phạm Minh Huy',    email: 'hyminh@gmail.com',       contact: '12300123' }
+        ];
+
+        let nextId = 6;
+
+        function renderList() {
+            let tbody = document.getElementById('product-list');
+            document.getElementById('counter').textContent = products.length;
+            tbody.innerHTML = '';
+
+            for (let i = 0; i < products.length; i++) {
+                let p = products[i];
+                tbody.innerHTML +=
+                    '<tr>' +
+                        '<td>' + p.id      + '</td>' +
+                        '<td>' + p.name    + '</td>' +
+                        '<td>' + p.email   + '</td>' +
+                        '<td>' + p.contact + '</td>' +
+                        '<td>' +
+                            '<button onclick="displayProduct(' + p.id + ')">Xem</button> ' +
+                            '<button onclick="deleteProduct(' + p.id + ')">Xoá</button>' +
+                        '</td>' +
+                    '</tr>';
+            }
+        }
+
+        function addProduct() {
+            let name    = document.getElementById('input-name').value.trim();
+            let email   = document.getElementById('input-email').value.trim();
+            let contact = document.getElementById('input-contact').value.trim();
+
+            products.push({ id: nextId++, name, email, contact });
+
+            document.getElementById('input-name').value    = '';
+            document.getElementById('input-email').value   = '';
+            document.getElementById('input-contact').value = '';
+
+            renderList();
+        }
+
+        function deleteProduct(id) {
+            for (let i = 0; i < products.length; i++) {
+                if (products[i].id === id) {
+                    products.splice(i, 1);
+                    break;
+                }
+            }
+            renderList();
+        }
+
+        function displayProduct(id) {
+            for (let i = 0; i < products.length; i++) {
+                if (products[i].id === id) {
+                    let p = products[i];
+                    alert(`ID: ${p.id}\nName: ${p.name}\nEmail: ${p.email}\nContact: ${p.contact}`);
+                    return;
+                }
+            }
+        }
+
+        renderList();
+    </script>
+</body>
 </html>
